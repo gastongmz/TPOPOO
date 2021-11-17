@@ -1,0 +1,85 @@
+package negocio;
+
+import java.util.Date;
+
+public class DetalleDefinicionAgenda {
+
+    private Integer id;
+    private int diaSemana;
+    private int duracionIntervalo; //minutos
+    private Date horaFin;
+    private Date horaInicio;
+    private Date horaInicioIntervalo;
+
+    /**
+     * Constructor por Defecto.
+     */
+    public DetalleDefinicionAgenda() {
+    }
+
+    /**
+     * Constructor con parámetros.
+     * @param diaSemana
+     * @param duracionIntervalo
+     * @param horaFin
+     * @param horaInicio
+     */
+    public DetalleDefinicionAgenda(int diaSemana, int duracionIntervalo, Date horaFin, Date horaInicio, Date horaInicioIntervalo) {
+        this.diaSemana = diaSemana;
+        this.duracionIntervalo = duracionIntervalo;
+        this.horaFin = horaFin;
+        this.horaInicio = horaInicio;
+        this.horaInicioIntervalo = horaInicioIntervalo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getDiaSemana() {
+        return diaSemana;
+    }
+
+    public void setDiaSemana(int diaSemana) {
+        this.diaSemana = diaSemana;
+    }
+
+    public int getDuracionIntervalo() {
+        return duracionIntervalo;
+    }
+
+    public void setDuracionIntervalo(int duracionIntervalo) {
+        this.duracionIntervalo = duracionIntervalo;
+    }
+
+    public Date getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Date horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public Date getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Date horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public Date getHoraInicioIntervalo() {
+        return horaInicioIntervalo;
+    }
+
+    public void setHoraInicioIntervalo(Date horaInicioIntervalo) {
+        this.horaInicioIntervalo = horaInicioIntervalo;
+    }
+
+
+}
+

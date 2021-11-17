@@ -11,6 +11,12 @@ public class Main {
 	   	PanelManager panelManager = new PanelManager();
 	    panelManager.armarManager();
 		panelManager.mostrarLogin();
+		//panelManager.mostrarPanelListaPaciente();
+		//panelManager.mostrarPanelListaOdontologo();
+		//panelManager.mostrarRegistroTurno();
+		//panelManager.mostrarMenuAdmin();
+		//panelManager.mostrarMenuPrincipal();
+		//panelManager.mostrarConsultaTurno();
 	    //panelManager.mostrarPanelLista();
 	    panelManager.showFrame();
 

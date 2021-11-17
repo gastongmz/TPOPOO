@@ -1,6 +1,8 @@
 package ui;
 
+import negocio.Paciente;
 import negocio.Persona;
+import servicio.PacienteService;
 import servicio.PersonaService;
 
 import javax.swing.*;
@@ -43,6 +45,7 @@ public class PanelLogin extends JPanel {
         loginFrame = new JFrame();
         loginFrame.setTitle("Ingrese sus credenciales");
         loginFrame.setLocation(new Point(200,500));
+        loginPanel.setBackground(new Color(178, 189, 189));
         loginFrame.add(loginPanel);
         loginButton = new JButton("INGRESAR");
         resetButton = new JButton("RESET");
@@ -51,6 +54,7 @@ public class PanelLogin extends JPanel {
         txtUsuario = new JTextField("",10);
         txtPassword = new JPasswordField("",10);
         showPassword=new JCheckBox("Mostrar");
+        showPassword.setBackground(new Color(178, 189, 189));
         scrollPane = new JScrollPane();
         contenidoTabla = new DefaultTableModel();
 
@@ -86,11 +90,19 @@ public class PanelLogin extends JPanel {
                 String user =txtUsuario.getText();
                 String pass = txtPassword.getText();
 
-                if (user.equalsIgnoreCase("admin") && pass.equalsIgnoreCase("123")) {
+                if (user.equalsIgnoreCase("admin") ) {
+                    if (pass.equalsIgnoreCase("123")){
                     JOptionPane.showMessageDialog(loginPanel, "Login correcto");
-                    panelManager.mostrarPanelLista();
+                    panelManager.mostrarMenuAdmin();}
+                    else{
+                        JOptionPane.showMessageDialog(loginPanel, "Usuario o password incorrecto.");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(loginPanel, "Usuario o password incorrecto.");
+                    if (validarUsurio(user,pass)) {
+                        panelManager.mostrarMenuPrincipal(ObtenerPacientePorUsuario(user));
+                    }else{
+                        JOptionPane.showMessageDialog(loginPanel, "Usuario o password incorrecto.");
+                    }
                 }
             }
         });
@@ -117,6 +129,40 @@ public class PanelLogin extends JPanel {
                 }
             }
         });
+}
+    public Boolean validarUsurio(String ususrio, String password){
+        List<Paciente> lista = ObtenerLista();
 
 
-}}
+       //lista.stream().filter(o -> o.getUsuario().equals(ususrio)).findFirst().isPresent();
+
+        if (lista.stream().filter(o -> o.getPassword().equals(password)).findFirst().isPresent() && lista.stream().filter(o -> o.getUsuario().equals(ususrio)).findFirst().isPresent()){
+            return true;
+        };
+
+
+
+        /*if (lista.contains(new Paciente().setUsuario(ususrio))){
+
+        }
+
+        for(Object o:lista) {
+            Paciente p = (Paciente) o;
+            if (ususrio == p.getUsuario() && password == p.getPassword())
+        }*/
+
+        return false;
+    }
+
+    private List<Paciente> ObtenerLista() {
+        PacienteService pacienteService = new PacienteService();
+        return pacienteService.listar();
+
+    }
+
+    private Paciente ObtenerPacientePorUsuario( String usuario) {
+        PacienteService pacienteService = new PacienteService();
+        return pacienteService.buscarPorUsuario(usuario);
+
+    }
+}

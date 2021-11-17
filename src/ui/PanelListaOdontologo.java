@@ -1,17 +1,16 @@
 package ui;
 
-import negocio.Persona;
-import servicio.PersonaService;
+import negocio.Odontologo;
+import servicio.OdontologoService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import java.util.List;
 
-public class PanelLista extends JPanel {
+public class PanelListaOdontologo extends JPanel {
 
     private JLabel label;
     private JTable jtable;
@@ -21,9 +20,11 @@ public class PanelLista extends JPanel {
     private JButton altaButton;
     private JButton eliminarButton;
     private JButton modificarButton;
+    private JButton menuButton;
     private PanelManager panelManager;
+    private JPanel panelListaOdontologo;
 
-    public PanelLista(PanelManager panelManager)
+    public PanelListaOdontologo(PanelManager panelManager)
     {
         this.panelManager = panelManager;
     }
@@ -33,27 +34,31 @@ public class PanelLista extends JPanel {
         this.removeAll();
 
         this.setLayout(new BorderLayout());
-        label = new JLabel("Aca iría una JTable para mostrar los odontologos o pacientes o turnos!!!!");
+        label = new JLabel("LISTADO ODONTOLOGOS");
         botonera = new JPanel();
-        altaButton = new JButton("Crear nuevo");
+        botonera.setBackground(new Color(178, 189, 189));
+        altaButton = new JButton("Registrar");
         eliminarButton = new JButton("Eliminar");
         modificarButton = new JButton("Modificar");
+        menuButton = new JButton("Menu");
         scrollPane = new JScrollPane();
         contenidoTabla = new DefaultTableModel();
         jtable = new JTable(contenidoTabla);
+        jtable.setBackground(new Color(178, 189, 189));
 
-        List<Persona> lista = ObtenerLista();
+        List<Odontologo> lista = ObtenerLista();
 
 
         //Columnas
         contenidoTabla.addColumn("ID");
         contenidoTabla.addColumn("Nombre");
         contenidoTabla.addColumn("Apellido");
-        contenidoTabla.addColumn("Edad");
+        contenidoTabla.addColumn("Matricula");
+
         //Filas
         for(Object o:lista) {
-            Persona p = (Persona) o;
-            Object[] row = {p.getId(), p.getNombre(), p.getApellido(), p.getEdad()};
+            Odontologo p = (Odontologo) o;
+            Object[] row = {p.getNroOdontologo(), p.getNombre(), p.getApellido(), p.getNroMatricula()};
             contenidoTabla.addRow(row);
         }
         jtable.setAutoCreateColumnsFromModel(true);
@@ -63,6 +68,7 @@ public class PanelLista extends JPanel {
         botonera.add(altaButton);
         botonera.add(eliminarButton);
         botonera.add(modificarButton);
+        botonera.add(menuButton);
 
         add(label, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -70,11 +76,19 @@ public class PanelLista extends JPanel {
 
         this.setVisible(true);
 
+        menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //llamar al formulario
+                panelManager.mostrarMenuAdmin();
+            }
+        });
+
         altaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //llamar al formulario
-                panelManager.mostrarPanelFormulario();
+                panelManager.mostrarPanelOdontologoFormulario();
             }
         });
 
@@ -82,11 +96,15 @@ public class PanelLista extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //eliminar por el id
-                long id = (long)jtable.getValueAt(jtable.getSelectedRow(),0);
-                PersonaService personaService = new PersonaService();
-                personaService.eliminar(id);
+                if (jtable.getSelectedRow() > 0) {
+                int id = (int)jtable.getValueAt(jtable.getSelectedRow(),0);
+                OdontologoService odontologoService = new OdontologoService();
+                odontologoService.eliminar(id);
 
-                panelManager.mostrarPanelLista();
+                panelManager.mostrarPanelListaOdontologo();
+                }else{
+                    JOptionPane.showMessageDialog(panelListaOdontologo, "Debe seleccionar un registro.");
+                }
             }
         });
 
@@ -100,21 +118,23 @@ public class PanelLista extends JPanel {
                 persona.setNombre(jtable.getValueAt(jtable.getSelectedRow(),1).toString());
                 persona.setApellido(jtable.getValueAt(jtable.getSelectedRow(),2).toString());
                 persona.setEdad((int)jtable.getValueAt(jtable.getSelectedRow(),3));*/
+                if (jtable.getSelectedRow() > 0) {
+                    int id = (int) jtable.getValueAt(jtable.getSelectedRow(), 0);
+                    OdontologoService odontologoService = new OdontologoService();
+                    Odontologo odontologo = odontologoService.buscar(id);
 
-                long id = (long)jtable.getValueAt(jtable.getSelectedRow(),0);
-                PersonaService personaService = new PersonaService();
-                Persona persona = personaService.buscar(id);
-
-                panelManager.mostrarPanelFormulario(persona);
-
+                    panelManager.mostrarPanelOdontologoFormulario(odontologo);
+                }else{
+                    JOptionPane.showMessageDialog(panelListaOdontologo, "Debe seleccionar un registro.");
+                }
             }
         });
 
     }
 
-    private List<Persona> ObtenerLista() {
-        PersonaService personaService = new PersonaService();
-        return personaService.listar();
+    private List<Odontologo> ObtenerLista() {
+        OdontologoService odontologoService = new OdontologoService();
+        return odontologoService.listar();
 
     }
 
