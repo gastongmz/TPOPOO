@@ -11,5 +11,6 @@ public interface TurnoDAO {
     public void eliminar(long id);
     public List<Turno> listar();
     public Turno buscar(long id);
+    public Boolean validarTurno(int odonto, int dia, int hora);
 
 }

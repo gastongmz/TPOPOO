@@ -73,7 +73,7 @@ public class TurnoDAOArchivo implements TurnoDAO {
 
     @Override
     public List<Turno> listar() {
-        //1 recuperar de un archivo todo el listado de personas
+        //1 recuperar de un archivo todo el listado de turnos
         Archivo archivoTurnos = new Archivo("turnos.txt");
         List<Turno> lista = archivoTurnos.recuperar();
 
@@ -130,5 +130,21 @@ public class TurnoDAOArchivo implements TurnoDAO {
                 return p;
         }
         return null;
+    }
+
+    @Override
+    public Boolean validarTurno(int odonto, int dia, int hora) {
+
+        Archivo archivoTurnos = new Archivo("turnos.txt");
+        List<Turno> lista = archivoTurnos.recuperar();
+
+        if(lista != null) {
+        for(Turno p : lista) {
+            //3 si lo encuentro retornar ese objeto persona.
+            if (p.getNroOdontologo() == odonto && p.getDia() == dia && p.getHora() == hora)
+                return true;
+        }}
+
+        return false;
     }
 }

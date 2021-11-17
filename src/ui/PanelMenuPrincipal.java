@@ -99,7 +99,7 @@ public class PanelMenuPrincipal extends JPanel {
         ConsultaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrarConsultaTurno();
+                panelManager.mostrarConsultaTurno(_paciente);
             }
         });
 

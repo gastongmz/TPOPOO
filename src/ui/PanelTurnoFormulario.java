@@ -126,6 +126,7 @@ public class PanelTurnoFormulario extends JPanel {
 
         lblId = new JLabel("Id: ");
         txtId = new JTextField(3);
+        txtId.setEnabled(false);
         lblOdontologo = new JLabel("Odontologo: ");
         cboOdontologos = new JComboBox();
         lblOdontologo.setLabelFor(cboOdontologos);
@@ -140,8 +141,8 @@ public class PanelTurnoFormulario extends JPanel {
         botonCancelar = new JButton("Cancelar");
 
 
-        //panelComponentes.add(lblId);
-        //panelComponentes.add(txtId);
+        panelComponentes.add(lblId);
+        panelComponentes.add(txtId);
         panelComponentes.add(lblOdontologo);
         panelComponentes.add(cboOdontologos);
         panelComponentes.add(lblDia);
@@ -151,7 +152,7 @@ public class PanelTurnoFormulario extends JPanel {
 
         panelComponentes.setBackground(new Color(178, 189, 189));
 
-        SpringUtilities.makeCompactGrid(panelComponentes , 3, 2);
+        SpringUtilities.makeCompactGrid(panelComponentes , 4, 2);
 
         JPanel botonera = new JPanel();
         botonera.add(botonGuardar);
@@ -176,27 +177,21 @@ public class PanelTurnoFormulario extends JPanel {
 
                 Turno turno = new Turno();
 
-                //if(!txtId.getText().equals(""))
-                if(1==1)
-
+                if (turnoResrvado(odonto.getId(), dia.getId(), hora.getId())){
+                    JOptionPane.showMessageDialog(header, "El turno ra fue reservado..");
+                }else{
+                if(_paciente.getNroPaciente()  != 0) {
                     turno.setNroOdontologo(odonto.getId());
                     turno.setDia(dia.getId());
                     turno.setHora(hora.getId());
                     turno.setNroPaciente(_paciente.getNroPaciente());
 
-
-                    /*odontologo.setNombre(txtNombre.getText());
-                    odontologo.setApellido(txtApellido.getText());
-                    odontologo.setNroMatricula(txtMatricula.getText());*/
-
-
-                //paciente.setEdad(Integer.parseInt(txtEdad.getText()));
-
-                TurnoService turnoService = new TurnoService();
-                turnoService.reservar(turno);
+                    TurnoService turnoService = new TurnoService();
+                    turnoService.reservar(turno);
+                }}
 
                 //2-mostrar listado
-                panelManager.mostrarConsultaTurno();
+                panelManager.mostrarConsultaTurno(_paciente);
             }
         });
 
@@ -205,8 +200,16 @@ public class PanelTurnoFormulario extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //mostrar listado
-                panelManager.mostrarConsultaTurno();
+                panelManager.mostrarConsultaTurno(_paciente);
             }
         });
+    }
+
+    public boolean turnoResrvado (int odonto, int dia, int hora){
+        TurnoService turnoService = new TurnoService();
+        if (turnoService.validarTurno( odonto,  dia,  hora)){
+            return true;
+        }
+        return false;
     }
 }

@@ -37,4 +37,9 @@ public class TurnoService {
     {
         return turnoDAO.listar();
     }
+
+    public boolean validarTurno(int odonto, int dia, int hora)
+    {
+        return turnoDAO.validarTurno( odonto,  dia,  hora);
+    }
 }

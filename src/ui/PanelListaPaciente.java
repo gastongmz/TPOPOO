@@ -56,7 +56,7 @@ public class PanelListaPaciente extends JPanel {
         contenidoTabla.addColumn("Domicilio");
         contenidoTabla.addColumn("DNI");
         contenidoTabla.addColumn("Fecha alta");
-        contenidoTabla.addColumn("ususario");
+        contenidoTabla.addColumn("Usuario");
         contenidoTabla.addColumn("Password");
 
         //Filas

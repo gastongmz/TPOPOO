@@ -25,7 +25,7 @@ public class PanelManager {
     public void armarManager()
     {
         frame = new JFrame();
-        frame.setBounds(100,100,500,500);
+        frame.setBounds(100,100,500,600);
 
         panelLogin = new PanelLogin(this);
         panelLogin.armarPanelLogin();
@@ -79,10 +79,11 @@ public class PanelManager {
         frame.getContentPane().repaint(); //refrezcar ventana
     }
 
-    public void mostrarConsultaTurno()
+    public void mostrarConsultaTurno(Paciente paciente)
     {
 
         frame.getContentPane().removeAll();
+        panelListaConsulta.armaHeader(paciente);
         panelListaConsulta.armarPanelLista();
         frame.getContentPane().add(panelListaConsulta);
         frame.getContentPane().validate(); //refrezcar ventana
@@ -92,6 +93,7 @@ public class PanelManager {
     public void mostrarMenuAdmin()
     {
         frame.getContentPane().removeAll();
+        menuAdmin.armaHeader();
         frame.getContentPane().add(menuAdmin);
         frame.getContentPane().validate(); //refrezcar ventana
         frame.getContentPane().repaint(); //refrezcar ventana

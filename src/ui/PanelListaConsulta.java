@@ -27,10 +27,18 @@ public class PanelListaConsulta extends JPanel {
     private JButton menuButton;
     private PanelManager panelManager;
     private  JPanel panelListConsulta;
+    private Paciente _paciente = new Paciente();
 
     public PanelListaConsulta(PanelManager panelManager)
     {
         this.panelManager = panelManager;
+    }
+
+    public void armaHeader(Paciente paciente){
+        if(paciente != null){
+
+            _paciente = paciente;
+        }
     }
 
     public void armarPanelLista(){
@@ -105,7 +113,7 @@ public class PanelListaConsulta extends JPanel {
                     TurnoService turnoService = new TurnoService();
                     turnoService.eliminar(id);
 
-                    panelManager.mostrarConsultaTurno();
+                    panelManager.mostrarConsultaTurno(_paciente);
                 }else{
                     JOptionPane.showMessageDialog(panelListConsulta, "Debe seleccionar un registro.");
                 }

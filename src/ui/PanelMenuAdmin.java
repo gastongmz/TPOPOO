@@ -1,5 +1,7 @@
 package ui;
 
+import negocio.Paciente;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -8,12 +10,12 @@ import java.awt.event.ActionListener;
 
 public class PanelMenuAdmin extends JPanel {
 
-    private JLabel label;
+    private JLabel label,labelHeader;
     private DefaultTableModel contenidoTabla;
     private JScrollPane scrollPane;
-    private JPanel loginPanel;
+    private JPanel loginPanel, header;
     private JFrame loginFrame;
-    private JButton loginButton;
+    private JButton loginButton,salirButton;
     private JButton resetButton;
     private PanelManager panelManager;
 
@@ -22,11 +24,33 @@ public class PanelMenuAdmin extends JPanel {
         this.panelManager = panelManager;
     }
 
+
+    public void armaHeader(){
+
+            header = new JPanel();
+            labelHeader = new JLabel("Bienvenido, Administrador" , SwingConstants.RIGHT);
+            labelHeader.setFont(new Font("Serif", Font.PLAIN, 15));
+            salirButton = new JButton("Salir");
+            salirButton.setHorizontalAlignment(SwingConstants.RIGHT);
+            salirButton.setBounds(20,250,170,30);
+            header.add(labelHeader);
+            header.add(salirButton);
+            add(header,BorderLayout.NORTH);
+
+            salirButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    panelManager.mostrarLogin();
+                }
+            });
+    }
+
     public void armarPaneMenuAdmin(){
 
         this.removeAll();
 
         this.setLayout(new BorderLayout());
+
         label = new JLabel("Ingrese sus credenciales");
         label.setFont(new Font("Serif", Font.PLAIN, 20));
         loginPanel = new JPanel();
@@ -45,6 +69,7 @@ public class PanelMenuAdmin extends JPanel {
         loginButton.setBounds(60,50,170,30);
         resetButton.setBounds(230,50,170,30);
 
+       // loginPanel.add(salirButton);
         loginPanel.add(loginButton);
         loginPanel.add(resetButton);
 
