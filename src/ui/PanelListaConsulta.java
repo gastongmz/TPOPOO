@@ -91,7 +91,7 @@ public class PanelListaConsulta extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //llamar al formulario
-                panelManager.mostrarMenuPrincipal(new Paciente());
+                panelManager.mostrarMenuPrincipal(_paciente);
             }
         });
 

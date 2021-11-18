@@ -178,7 +178,7 @@ public class PanelTurnoFormulario extends JPanel {
                 Turno turno = new Turno();
 
                 if (turnoResrvado(odonto.getId(), dia.getId(), hora.getId())){
-                    JOptionPane.showMessageDialog(header, "El turno ra fue reservado..");
+                    JOptionPane.showMessageDialog(header, "El turno ya fue reservado..");
                 }else{
                 if(_paciente.getNroPaciente()  != 0) {
                     turno.setNroOdontologo(odonto.getId());
@@ -188,10 +188,12 @@ public class PanelTurnoFormulario extends JPanel {
 
                     TurnoService turnoService = new TurnoService();
                     turnoService.reservar(turno);
+
+                    //2-mostrar listado
+                    panelManager.mostrarConsultaTurno(_paciente);
                 }}
 
-                //2-mostrar listado
-                panelManager.mostrarConsultaTurno(_paciente);
+
             }
         });
 
